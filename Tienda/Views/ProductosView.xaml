@@ -17,6 +17,6 @@
             <Button Content="Editar Producto" Command="{Binding EditarProductoCommand}" Margin="10"/>
             <Button Content="Borrar Producto" Command="{Binding BorrarProductoCommand}" Margin="10"/>
         </StackPanel>
-        <DataGrid ItemsSource="{Binding Products}" Margin="10" Grid.Row="1"/>
+        <DataGrid ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" Margin="10" Grid.Row="1"/>
     </Grid>
 </UserControl>

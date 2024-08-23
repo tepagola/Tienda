@@ -1,6 +1,8 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using Tienda.Models;
 using Tienda.ViewModels;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Tienda.Views
 {
@@ -9,7 +11,7 @@ namespace Tienda.Views
     /// </summary>
     public partial class AgregarProductoWindow : Window
     {
-        internal Product Product { get; private set; }
+        internal Product Product { get; set; }
 
         internal AgregarProductoWindow()
         {
@@ -19,26 +21,31 @@ namespace Tienda.Views
         private void AceptarButton_Click(object sender, RoutedEventArgs e)
         {
             // Aquí estamos confiando en la vinculación de datos para obtener los valores
-            var viewModel = DataContext as ProductosViewModel;
+            var viewModel = DataContext as Product;
 
             // Validar los datos a través del ViewModel
-            if (viewModel != null && viewModel.ValidarProducto())
+            if (viewModel != null && this.ValidarProducto())
             {
-                // Crear el producto con los datos del ViewModel
-                Product = new Product
-                {
-                    Name = viewModel.Nombre,
-                    Category = viewModel.Categoria,
-                    Price = viewModel.Precio,
-                    Stock = viewModel.Stock
-                };
-
+                this.Product = viewModel;
                 DialogResult = true;  // Esto cerrará la ventana modal y devolverá true
             }
             else
             {
                 MessageBox.Show("Por favor, complete todos los campos correctamente.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private bool ValidarProducto()
+        {
+            // Validación simple de campos
+            return true;
+        }
+
+        private void PriceTextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            decimal result;
+            // Permitir solo valores numéricos y un único separador decimal
+            e.Handled = !decimal.TryParse(((TextBox)sender).Text + e.Text, out result);
         }
     }
 }

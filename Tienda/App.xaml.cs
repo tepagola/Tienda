@@ -35,9 +35,6 @@ namespace Tienda
 
             // Inicializar la base de datos aquí
             await _databaseInitializer.EnsureDatabaseCreatedAsync();
-
-            var mainWindow = new MainWindow();
-            mainWindow.Show();
         }
     }
 
